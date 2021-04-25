@@ -1,5 +1,12 @@
 import React from 'react'
-import Document, { DocumentContext, DocumentInitialProps } from 'next/document'
+import Document, {
+  DocumentContext,
+  DocumentInitialProps,
+  Head,
+  Html,
+  Main,
+  NextScript
+} from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
@@ -29,5 +36,19 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal()
     }
+  }
+
+  render(): JSX.Element {
+    return (
+      <Html lang="en">
+        <Head>
+          <meta charSet="utf-8"></meta>
+        </Head>
+        <body>
+          <Main></Main>
+          <NextScript></NextScript>
+        </body>
+      </Html>
+    )
   }
 }
