@@ -1,12 +1,16 @@
 import React from 'react'
 
 import { Container } from '../styles/pages/home'
+import Navbar from './navbar'
 
 const Home: React.FC = () => {
   return (
-    <Container>
-      <div>Hello World !</div>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <div>HOME PAGE !</div>
+      </Container>
+    </>
   )
 }
 export default Home
