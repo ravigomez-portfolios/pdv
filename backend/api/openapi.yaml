@@ -6,17 +6,8 @@ info:
     to describe security to your API.
   version: 1.0.0
 servers:
-  - url: https://virtserver.swaggerhub.com/ravigomez/pdv/1.0.0
+  - url: http://localhost:8080/pdv/1.0.0
     description: SwaggerHub API Auto Mocking
-  - url: "https://{environment}.tigrebranco.tec.br/pdv/1.0.0"
-    description: SwaggerHub API Auto Mocking
-    variables:
-      environment:
-        default: api
-        enum:
-          - api
-          - api-dev
-          - api-stage
 security:
   - accessCode:
       - read
