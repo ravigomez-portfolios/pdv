@@ -1,0 +1,1 @@
+docker build -t pos-backend-dotnet:1.0.0 .
