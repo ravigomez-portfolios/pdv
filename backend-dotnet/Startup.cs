@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using POS.Backend.Data;
+using POS.Backend.Models;
 
 namespace backend_dotnet
 {
@@ -32,6 +34,8 @@ namespace backend_dotnet
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend_dotnet", Version = "v1" });
             });
+
+            services.AddScoped<IRepository<Product>, ProductRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

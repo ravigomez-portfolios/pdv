@@ -8,7 +8,11 @@ namespace POS.Backend.Controllers{
   [Route("api/products")]
   [ApiController]
   public class ProductController : ControllerBase{
-    private readonly ProductRepo _repo = new ProductRepo();
+    private readonly IRepository<Product> _repo;
+
+    public ProductController(IRepository<Product> repository){
+      _repo = repository;
+    }
 
     [HttpGet]
     public ActionResult <IEnumerable<Product>> GetAllProducts(){
