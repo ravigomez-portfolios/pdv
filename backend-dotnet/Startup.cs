@@ -32,6 +32,7 @@ namespace backend_dotnet
 
             services.AddDbContext<Context>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DBConnetion")));
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend_dotnet", Version = "v1" });

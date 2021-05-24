@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using POS.Backend.Data;
+using POS.Backend.DTOs;
 using POS.Backend.Models;
 
 namespace POS.Backend.Controllers{
@@ -9,21 +11,26 @@ namespace POS.Backend.Controllers{
   [ApiController]
   public class ProductController : ControllerBase{
     private readonly IRepository<Product> _repo;
+    private readonly IMapper _mapper;
 
-    public ProductController(IRepository<Product> repository){
+    public ProductController(IRepository<Product> repository, IMapper mapper){
       _repo = repository;
+      _mapper = mapper;
     }
 
     [HttpGet]
-    public ActionResult <IEnumerable<Product>> GetAllProducts(){
+    public ActionResult <IEnumerable<ProductViewDataDTO>> GetAllProducts(){
       var list = _repo.GetAll();
-      return Ok(list);
+      return Ok(_mapper.Map<IEnumerable<ProductViewDataDTO>>(list));
     }
 
     [HttpGet("{id}")]
-    public ActionResult <Product> GetProductById(int id){
+    public ActionResult <ProductViewDataDTO> GetProductById(int id){
       var product = _repo.GetById(id);
-      return Ok(product);
+      if (product != null)
+        return Ok(_mapper.Map<ProductViewDataDTO>(product));
+      else
+        return NotFound();
 
     }
 
