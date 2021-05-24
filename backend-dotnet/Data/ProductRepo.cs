@@ -1,9 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using POS.Backend.Models;
 
 namespace POS.Backend.Data{
   public class ProductRepo : IRepository<Product>
   {
+    private readonly Context _context;
+
+    public ProductRepo(Context context)
+    {
+        _context = context;
+    }
     public void Delete(Product entity)
     {
       throw new System.NotImplementedException();
@@ -11,16 +18,11 @@ namespace POS.Backend.Data{
 
     public IEnumerable<Product> GetAll()
     {
-      var list = new List<Product>{
-        new Product{id=1, Name="Blue Ball", Description="Blue Ball from JJ inc"},
-        new Product{id=2, Name="Green Ball", Description="Green Ball from JJ inc"},
-        new Product{id=3, Name="White Ball", Description="White Ball from JJ inc"}
-      };
-      return list;
+      return _context.Products.ToList();
     }
     public Product GetById(long id)
     {
-      return new Product{id=id, Name="Blue Ball", Description="Blue Ball from JJ inc"};
+      return _context.Products.FirstOrDefault(p => p.id == id);
     }
 
     public void Insert(Product entity)
