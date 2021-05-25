@@ -31,7 +31,15 @@ namespace POS.Backend.Controllers{
         return Ok(_mapper.Map<ProductViewDataDTO>(product));
       else
         return NotFound();
+    }
 
+    [HttpPost]
+    public ActionResult <ProductViewDataDTO> InsertProduct(ProductInsertDTO p){
+      var product = _mapper.Map<Product>(p);
+      _repo.Insert(product);
+      _repo.SaveChanges();
+      var productViewData = _mapper.Map<ProductViewDataDTO>(product);
+      return Ok(productViewData);
     }
 
   }

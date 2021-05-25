@@ -27,7 +27,12 @@ namespace POS.Backend.Data{
 
     public void Insert(Product entity)
     {
-      throw new System.NotImplementedException();
+      _context.Products.Add(entity); 
+    }
+
+    public bool SaveChanges()
+    {
+      return (_context.SaveChanges() >= 0);
     }
 
     public void Update(Product entity)

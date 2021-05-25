@@ -8,6 +8,7 @@ namespace POS.Backend.Data {
     T GetById(Int64 id);  
     void Insert(T entity);  
     void Update(T entity);  
-    void Delete(T entity);  
+    void Delete(T entity);
+    bool SaveChanges();
   }  
 }  
