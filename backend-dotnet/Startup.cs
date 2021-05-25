@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using POS.Backend.Data;
 using POS.Backend.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace backend_dotnet
 {
@@ -31,7 +32,8 @@ namespace backend_dotnet
         {
 
             services.AddDbContext<Context>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DBConnetion")));
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(s => {s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();});
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {

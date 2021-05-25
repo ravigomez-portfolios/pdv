@@ -12,6 +12,7 @@ namespace POS.Backend.Profiles
             CreateMap<Product, ProductViewDataDTO>();
             CreateMap<ProductInsertDTO, Product>();
             CreateMap<ProductUpdateDTO, Product>();
+            CreateMap<Product, ProductUpdateDTO>();
         }
 
     }

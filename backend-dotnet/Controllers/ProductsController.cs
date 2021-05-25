@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using POS.Backend.Data;
 using POS.Backend.DTOs;
@@ -51,6 +52,23 @@ namespace POS.Backend.Controllers{
         return NotFound();
       
       _mapper.Map(productUpdate, product);
+      _repo.Update(product);
+      _repo.SaveChanges();
+      return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public ActionResult PartialUpdateProduct(int id, JsonPatchDocument<ProductUpdateDTO> patchProductUpdate){
+      var product = _repo.GetById(id);
+      
+      if (product == null) return NotFound();
+      
+      var productToPatch = _mapper.Map<ProductUpdateDTO>(product);
+      patchProductUpdate.ApplyTo(productToPatch, ModelState);
+      
+      if (! TryValidateModel(productToPatch)) return ValidationProblem(ModelState);
+      
+      _mapper.Map(productToPatch, product);
       _repo.Update(product);
       _repo.SaveChanges();
       return NoContent();
