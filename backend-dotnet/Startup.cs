@@ -15,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using POS.Backend.Data;
 using POS.Backend.Models;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace backend_dotnet
 {
@@ -32,6 +33,12 @@ namespace backend_dotnet
         {
 
             services.AddDbContext<Context>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DBConnetion")));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.Audience = Configuration["AAD:ResourceId"];
+                    opt.Authority = $"{Configuration["AAD:Instance"]}{Configuration["AAD:TenantId"]}";
+                });
             services.AddControllers()
                     .AddNewtonsoftJson(s => {s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();});
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -54,8 +61,10 @@ namespace backend_dotnet
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

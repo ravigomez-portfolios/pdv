@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using POS.Backend.Data;
 using POS.Backend.DTOs;
 using POS.Backend.Models;
 
 namespace POS.Backend.Controllers{
   
+  [Authorize]
   [Route("api/products")]
   [ApiController]
   public class ProductController : ControllerBase{
