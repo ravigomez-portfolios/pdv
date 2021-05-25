@@ -37,7 +37,7 @@ namespace POS.Backend.Data{
 
     public void Update(Product entity)
     {
-      throw new System.NotImplementedException();
+      _context.Products.Update(entity);
     }
   }
 }

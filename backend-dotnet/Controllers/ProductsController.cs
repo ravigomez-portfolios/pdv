@@ -44,5 +44,17 @@ namespace POS.Backend.Controllers{
                             productViewData);
     }
 
+    [HttpPut("{id}")]
+    public ActionResult UpdateProduct(int id, ProductUpdateDTO productUpdate){
+      var product = _repo.GetById(id);
+      if (product == null)
+        return NotFound();
+      
+      _mapper.Map(productUpdate, product);
+      _repo.Update(product);
+      _repo.SaveChanges();
+      return NoContent();
+    }
+
   }
 }
