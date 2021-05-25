@@ -24,7 +24,7 @@ namespace POS.Backend.Controllers{
       return Ok(_mapper.Map<IEnumerable<ProductViewDataDTO>>(list));
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name="GetProductById")]
     public ActionResult <ProductViewDataDTO> GetProductById(int id){
       var product = _repo.GetById(id);
       if (product != null)
@@ -39,7 +39,9 @@ namespace POS.Backend.Controllers{
       _repo.Insert(product);
       _repo.SaveChanges();
       var productViewData = _mapper.Map<ProductViewDataDTO>(product);
-      return Ok(productViewData);
+      return CreatedAtRoute(nameof(GetProductById),
+                            new { id = productViewData.id },
+                            productViewData);
     }
 
   }
