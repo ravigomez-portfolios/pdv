@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
@@ -37,6 +38,7 @@ namespace POS.Backend.Controllers{
     [HttpPost]
     public ActionResult <ProductViewDataDTO> InsertProduct(ProductInsertDTO p){
       var product = _mapper.Map<Product>(p);
+      product.AddedDate = DateTime.UtcNow;
       _repo.Insert(product);
       _repo.SaveChanges();
       var productViewData = _mapper.Map<ProductViewDataDTO>(product);
@@ -52,6 +54,7 @@ namespace POS.Backend.Controllers{
         return NotFound();
       
       _mapper.Map(productUpdate, product);
+      product.ModifiedDate = DateTime.UtcNow;
       _repo.Update(product);
       _repo.SaveChanges();
       return NoContent();
@@ -69,7 +72,18 @@ namespace POS.Backend.Controllers{
       if (! TryValidateModel(productToPatch)) return ValidationProblem(ModelState);
       
       _mapper.Map(productToPatch, product);
+      product.ModifiedDate = DateTime.UtcNow;
       _repo.Update(product);
+      _repo.SaveChanges();
+      return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult DeleteProduct(int id){
+      var product = _repo.GetById(id);
+      if (product == null) return NotFound();
+      
+      _repo.Delete(product);
       _repo.SaveChanges();
       return NoContent();
     }

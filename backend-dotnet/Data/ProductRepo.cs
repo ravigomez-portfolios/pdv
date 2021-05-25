@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using POS.Backend.Models;
@@ -13,7 +14,9 @@ namespace POS.Backend.Data{
     }
     public void Delete(Product entity)
     {
-      throw new System.NotImplementedException();
+      if (entity == null) throw new ArgumentNullException(nameof(entity));
+      
+      _context.Remove(entity);
     }
 
     public IEnumerable<Product> GetAll()
@@ -27,6 +30,8 @@ namespace POS.Backend.Data{
 
     public void Insert(Product entity)
     {
+      if (entity == null) throw new ArgumentNullException(nameof(entity));
+
       _context.Products.Add(entity); 
     }
 
