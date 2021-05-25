@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  pos-background-dotnet:
+    image: pos-backend-dotnet:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:80
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 1
+        window: 120s
+    networks:
+      - overlay
+
+networks:
+  overlay:
