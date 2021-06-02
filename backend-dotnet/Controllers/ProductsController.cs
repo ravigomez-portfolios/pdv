@@ -23,12 +23,18 @@ namespace POS.Backend.Controllers{
       _mapper = mapper;
     }
 
+    /// <summary>
+    /// List all products on the database.
+    /// </summary>
     [HttpGet]
     public ActionResult <IEnumerable<ProductViewDataDTO>> GetAllProducts(){
       var list = _repo.GetAll();
       return Ok(_mapper.Map<IEnumerable<ProductViewDataDTO>>(list));
     }
 
+    /// <summary>
+    /// Get one product by ID.
+    /// </summary>
     [HttpGet("{id}", Name="GetProductById")]
     public ActionResult <ProductViewDataDTO> GetProductById(int id){
       var product = _repo.GetById(id);
@@ -38,6 +44,9 @@ namespace POS.Backend.Controllers{
         return NotFound();
     }
 
+    /// <summary>
+    /// Insert a product on the database.
+    /// </summary>
     [HttpPost]
     public ActionResult <ProductViewDataDTO> InsertProduct(ProductInsertDTO p){
       var product = _mapper.Map<Product>(p);
@@ -50,6 +59,9 @@ namespace POS.Backend.Controllers{
                             productViewData);
     }
 
+    /// <summary>
+    /// Update the entire product object (PUT) on the database.
+    /// </summary>
     [HttpPut("{id}")]
     public ActionResult UpdateProduct(int id, ProductUpdateDTO productUpdate){
       var product = _repo.GetById(id);
@@ -63,6 +75,9 @@ namespace POS.Backend.Controllers{
       return NoContent();
     }
 
+    /// <summary>
+    /// Partial product update (PATCH) on the database.
+    /// </summary>
     [HttpPatch("{id}")]
     public ActionResult PartialUpdateProduct(int id, JsonPatchDocument<ProductUpdateDTO> patchProductUpdate){
       var product = _repo.GetById(id);
@@ -81,6 +96,9 @@ namespace POS.Backend.Controllers{
       return NoContent();
     }
 
+    /// <summary>
+    /// Delete a product on the database.
+    /// </summary>
     [HttpDelete("{id}")]
     public ActionResult DeleteProduct(int id){
       var product = _repo.GetById(id);

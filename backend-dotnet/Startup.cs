@@ -44,7 +44,23 @@ namespace backend_dotnet
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend_dotnet", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "backend_dotnet", 
+                    Version = "v1",
+                    Description = "The backend of POS sample app",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Rafael Gómez",
+                        Email = "ravigomez@gmail.com",
+                        Url = new Uri("https://twitter.com/ravigomez"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "MIT",
+                        Url = new Uri("https://opensource.org/licenses/MIT"),
+                    } 
+                });
             });
 
             services.AddScoped<IRepository<Product>, ProductRepo>();
