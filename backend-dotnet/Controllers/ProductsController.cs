@@ -26,6 +26,9 @@ namespace POS.Backend.Controllers{
     /// <summary>
     /// List all products on the database.
     /// </summary>
+    /// <response code="200">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    /// <response code="401">Not Authorized</response>    
     [HttpGet]
     public ActionResult <IEnumerable<ProductViewDataDTO>> GetAllProducts(){
       var list = _repo.GetAll();
